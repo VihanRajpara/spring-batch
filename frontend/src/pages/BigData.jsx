@@ -1,11 +1,147 @@
-import React from 'react';
-import { Box,Button, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import {
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Checkbox,
+  FormControlLabel,
+  Grid,
+  Paper,
+  TextField,
+  Typography
+} from '@mui/material';
+
+const cardData = [
+  {
+    title: 'Spring Batch',
+    method: 'springBatch',
+    description: 'Ideal for large-scale ETL and chunk-based processing.'
+  },
+  {
+    title: 'JDBC Batch',
+    method: 'jdbcBatch',
+    description: 'Uses batch inserts with plain JDBC, fastest in raw operations.'
+  },
+  {
+    title: 'JPA',
+    method: 'jpa',
+    description: 'High-level ORM approach with convenience but slower for big volumes.'
+  },
+  {
+    title: 'Plain JDBC',
+    method: 'plainJdbc',
+    description: 'Manual control of JDBC, useful for detailed optimization.'
+  }
+];
 
 const BigData = () => {
+  const [selectedMethods, setSelectedMethods] = useState(['springBatch', 'jdbcBatch', 'jpa', 'plainJdbc']);
+  const [count, setCount] = useState(500000);
+
+  const handleCheckboxChange = (method) => (e) => {
+    setSelectedMethods((prev) =>
+      e.target.checked
+        ? [...prev, method]
+        : prev.filter((m) => m !== method)
+    );
+  };
+
+  const handleStart = () => {
+    const methodsToProcess = cardData.filter(({ method }) =>
+      selectedMethods.includes(method)
+    );
+    console.log('🚀 Initiating Data Import:', {
+      totalRecords: count,
+      selectedStrategies: methodsToProcess.map(({ title }) => title)
+    });
+    // TODO: Connect with backend import logic per selected method
+  };
+
   return (
-    <Box>
-      <Typography variant="h4">Big Data Page</Typography>
-      <Button variant="contained" color="primary">Click Me</Button>
+    <Box sx={{ p: 2 }}>
+      {/* Header */}
+      <Grid
+        marginBottom={2}
+        container
+        justifyContent="center"
+        alignItems="center"
+        padding="6px"
+        borderRadius={3}
+        sx={{ backgroundColor: '#01579b' }}
+      >
+        <Typography fontWeight={500} color="white">
+          Select & Run High-Volume Data Import Strategies
+        </Typography>
+      </Grid>
+
+      {/* Common Input + Start Button */}
+      <Paper sx={{ p: 2, mb: 2 }}>
+        <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', justifyContent: 'center' }}>
+          <TextField
+            value={count}
+            onChange={(e) => setCount(Number(e.target.value))}
+            type="number"
+            size="small"
+            label="Number of Data"
+          />
+          <Button variant="contained" sx={{ whiteSpace: 'nowrap' }} onClick={handleStart}>
+            Start Selected
+          </Button>
+        </Box>
+      </Paper>
+
+      {/* Method Cards */}
+      <Paper sx={{ p: 2, justifyContent: 'center', alignItems: 'center', display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+        {cardData.map(({ title, method, description }) => (
+          <Card
+            key={method}
+            sx={{
+              maxWidth: 300,
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              borderRadius: 4,
+              boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+              transition: 'transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out',
+              background: 'linear-gradient(145deg, #f0f0f0, #ffffff)',
+              '&:hover': {
+                transform: 'translateY(-4px)',
+                boxShadow: '0 8px 30px rgba(0,0,0,0.2)',
+              },
+              border: selectedMethods.includes(method)
+                ? '2px solid #1976d2'
+                : '1px solid #ccc',
+            }}
+          >
+            <CardContent>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={selectedMethods.includes(method)}
+                    onChange={handleCheckboxChange(method)}
+                  />
+                }
+                label={
+                  <Typography fontWeight={600} fontSize="1rem">
+                    {title}
+                  </Typography>
+                }
+              />
+              <Typography variant="body2" color="text.secondary">
+                {description}
+              </Typography>
+            </CardContent>
+            <CardActions>
+              <Button size="small" disabled>
+                Preview (Coming Soon)
+              </Button>
+            </CardActions>
+          </Card>
+        ))}
+      </Paper>
     </Box>
   );
 };
