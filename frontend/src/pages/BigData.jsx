@@ -29,11 +29,11 @@ const cardData = [
     method: 'jpa',
     description: 'High-level ORM approach with convenience but slower for big volumes.'
   },
-  {
-    title: 'Plain JDBC',
-    method: 'plainJdbc',
-    description: 'Manual control of JDBC, useful for detailed optimization.'
-  }
+  // {
+  //   title: 'Plain JDBC',
+  //   method: 'plainJdbc',
+  //   description: 'Manual control of JDBC, useful for detailed optimization.'
+  // }
 ];
 
 const BigData = () => {
