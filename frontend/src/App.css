@@ -1,10 +1,6 @@
-html,
-body,
-#root,
-.app {
-    font-family: Roboto, Arial, sans-serif;
-    color: #222;
-    letter-spacing: 0.05;
+body {
+  font-family: 'Poppins', sans-serif;
+  height: 100vh;
 }
 
 ::-webkit-scrollbar {

@@ -69,9 +69,9 @@ const BigData = () => {
         alignItems="center"
         padding="6px"
         borderRadius={3}
-        sx={{ backgroundColor: '#01579b' }}
+        sx={{ backgroundColor: '#1565C0' }}
       >
-        <Typography fontWeight={500} color="white">
+        <Typography fontWeight={600} color="white">
           Select & Run High-Volume Data Import Strategies
         </Typography>
       </Grid>
@@ -93,13 +93,21 @@ const BigData = () => {
       </Paper>
 
       {/* Method Cards */}
-      <Paper sx={{ p: 2, justifyContent: 'center', alignItems: 'center', display: 'flex', flexWrap: 'wrap', gap: 2 }}>
+      <Paper
+        sx={{
+          p: 2,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'stretch',
+          flexWrap: 'wrap',
+          gap: 2,
+        }}
+      >
         {cardData.map(({ title, method, description }) => (
           <Card
             key={method}
             sx={{
-              maxWidth: 300,
-              height: '100%',
+              width: 300, // fixed width
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
@@ -116,7 +124,7 @@ const BigData = () => {
                 : '1px solid #ccc',
             }}
           >
-            <CardContent>
+            <CardContent sx={{ flexGrow: 1 }}>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -142,6 +150,7 @@ const BigData = () => {
           </Card>
         ))}
       </Paper>
+
     </Box>
   );
 };
