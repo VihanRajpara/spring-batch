@@ -10,7 +10,4 @@ public class BigdataApplication {
 		SpringApplication.run(BigdataApplication.class, args);
 	}
 	
-	
-	
-
 }
