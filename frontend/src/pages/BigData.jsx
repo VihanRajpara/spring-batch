@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Button,
@@ -6,9 +6,13 @@ import {
   CardActions,
   CardContent,
   Checkbox,
+  FormControl,
   FormControlLabel,
   Grid,
+  InputLabel,
+  MenuItem,
   Paper,
+  Select,
   TextField,
   Typography
 } from '@mui/material';
@@ -39,6 +43,11 @@ const cardData = [
 const BigData = () => {
   const [selectedMethods, setSelectedMethods] = useState(['springBatch', 'jdbcBatch', 'jpa', 'plainJdbc']);
   const [count, setCount] = useState(500000);
+  const [type, setType] = React.useState(0);
+
+  const handleChangeType = (event) => {
+    setType(event.target.value);
+  };
 
   const handleCheckboxChange = (method) => (e) => {
     setSelectedMethods((prev) =>
@@ -47,6 +56,10 @@ const BigData = () => {
         : prev.filter((m) => m !== method)
     );
   };
+  useEffect(() => {
+    console.log("selected method :::", selectedMethods);
+
+  }, [selectedMethods])
 
   const handleStart = () => {
     const methodsToProcess = cardData.filter(({ method }) =>
@@ -86,6 +99,21 @@ const BigData = () => {
             size="small"
             label="Number of Data"
           />
+          <Box sx={{ minWidth: 250 }}>
+            <FormControl size='small' fullWidth>
+              <InputLabel id="demo-simple-select-label">Type</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={type}
+                label="Age"
+                onChange={handleChangeType}
+              >
+                <MenuItem value={0}>With Data Processing</MenuItem>
+                <MenuItem value={1}>Without Processing</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
           <Button variant="contained" sx={{ whiteSpace: 'nowrap' }} onClick={handleStart}>
             Start Selected
           </Button>
