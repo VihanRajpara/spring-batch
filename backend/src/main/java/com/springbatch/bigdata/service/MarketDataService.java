@@ -37,17 +37,19 @@ public class MarketDataService {
     private JdbcTemplate jdbcTemplate;
 	
 	private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd  HH:mm:ss");
+	
+	private static final ClassPathResource RESOURCE = new ClassPathResource("Data.csv");
 
 	public String importCsvForJPA() throws Exception {
 		truncateTable();
 		long oneMinuteNs = 60L * 1_000_000_000L;
 
-		var resource = new ClassPathResource("data.csv");
+		
 		int count = 0;
 		
 		long startTime = System.nanoTime();
 		try (var reader = new BufferedReader(
-				new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8))) {
+				new InputStreamReader(RESOURCE.getInputStream(), StandardCharsets.UTF_8))) {
 			reader.readLine(); // skip header
 			String line;
 			while ((line = reader.readLine()) != null) {
@@ -85,10 +87,10 @@ public class MarketDataService {
         
         long oneMinuteNs = 60L * 1_000_000_000L;
 
-        var resource = new ClassPathResource("Data.csv");
+        
         int count = 0;
         long startTime = System.nanoTime();
-        try (var reader = new BufferedReader(new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8))) {
+        try (var reader = new BufferedReader(new InputStreamReader(RESOURCE.getInputStream(), StandardCharsets.UTF_8))) {
             String headerLine = reader.readLine();
             if (headerLine == null) return "CSV is empty.";
 
@@ -143,10 +145,10 @@ public class MarketDataService {
         int totalInserted = 0;
         int totalProcessed = 0;
 
-        var resource = new ClassPathResource("Data.csv");
+        
         String[] headers;
 
-        try (var reader = new BufferedReader(new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8))) {
+        try (var reader = new BufferedReader(new InputStreamReader(RESOURCE.getInputStream(), StandardCharsets.UTF_8))) {
             String headerLine = reader.readLine();
             if (headerLine == null) return "CSV is empty.";
             headers = headerLine.split(",");
@@ -218,7 +220,7 @@ public class MarketDataService {
 //    public String importUsingLoadData() throws Exception {
 //        truncateTable();
 //
-//        var resource = new ClassPathResource("Data.csv");
+//        
 //        File tempFile = File.createTempFile("market-data-", ".csv");
 //        tempFile.deleteOnExit();
 //
