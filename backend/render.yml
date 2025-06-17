@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: spring-batch-backend
+    env: docker
+    branch: main
+    root: backend
+    dockerContext: backend
+    dockerfilePath: backend/Dockerfile
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        value: jdbc:mysql://...
+      - key: SPRING_DATASOURCE_USERNAME
+        value: your_user
+      - key: SPRING_DATASOURCE_PASSWORD
+        value: your_pass
