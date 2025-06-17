@@ -21,7 +21,7 @@ public class JdbcManualConfig {
 	}
 	
 	@Bean
-	public JdbcTemplate getSampleLiveLmsjdbcTemplate() {
+	public JdbcTemplate getjdbcTemplate() {
 		return new JdbcTemplate(getDataSource());
 	}
 }

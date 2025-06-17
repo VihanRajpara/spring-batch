@@ -31,6 +31,7 @@ public class JpaConfig {
         Properties properties = new Properties();
         properties.setProperty("hibernate.hbm2ddl.auto", "update");
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
+        properties.setProperty("hibernate.boot.allow_jdbc_metadata_access", "false");
         em.setJpaProperties(properties);
 
         return em;
